@@ -16,7 +16,7 @@ int main() {
 	sf::RectangleShape leftPaddle;
 	sf::Vector2f paddleSize(26, 100);
 	sf::RectangleShape rightPaddleAI;
-	float paddleSpeed = 200.f;
+	float paddleSpeed = 300.f;
 	sf::Vector2f pauseMessagePos(200, 300);
 	sf::CircleShape ball;
 	const float ballRadius = 10.f;
@@ -68,7 +68,7 @@ int main() {
 	ball.setOutlineColor(sf::Color::Black);
 	ball.setOrigin(ballRadius / 2, ballRadius / 2);
 	sf::Clock AITimer;
-	const sf::Time AIReaction = sf::seconds(0.2f);
+	const sf::Time AIReaction = sf::seconds(0.1f);
 	float rightPaddleSpeed = 0.f;
 
 	sf::Event event;
@@ -88,7 +88,6 @@ int main() {
 					leftPaddle.setPosition(leftPaddlePosition);
 					rightPaddleAI.setPosition(rightPaddlePosition);
 					ball.setPosition(WIDTH / 2, HEIGHT / 2);
-
 					do {
 
 
@@ -97,15 +96,26 @@ int main() {
 
 					} while (std::abs(std::cos(ballAngle) < 0.7));
 
-
+					
 
 				}
 			}
 
 		}
+		if (isPlaying) {
+			mWindow.clear(sf::Color::White);
+			mWindow.draw(leftPaddle);
+			mWindow.draw(rightPaddleAI);
+			mWindow.draw(ball);
+		}
+		else {
+			mWindow.clear(sf::Color::Green);
+			mWindow.draw(pauseMessage);
+		}
 
 			if (isPlaying) {
-				//Player movement
+						//Player movement
+				
 				float timeElapsed = clock.restart().asSeconds();
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
 
@@ -193,16 +203,7 @@ int main() {
 				}
 
 			}
-			if (isPlaying) {
-				mWindow.clear(sf::Color::White);
-				mWindow.draw(leftPaddle);
-				mWindow.draw(rightPaddleAI);
-				mWindow.draw(ball);
-			}
-			else {
-				mWindow.clear(sf::Color::Green);
-				mWindow.draw(pauseMessage);
-			}
+			
 
 		mWindow.display();
 	}
